@@ -1,50 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { Image, View, Text } from 'react-native';
-
-// Home screen component
-const HomeScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home Screen</Text>
-    </View>
-);
-
-// Popular screen component
-const PopularScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Popular Screen</Text>
-    </View>
-);
-
-// Favourite screen component
-const FavouriteScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Favourite Screen</Text>
-    </View>
-);
-
-// Nouveauté screen component
-const NouveautéScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Nouveauté Screen</Text>
-    </View>
-);
-
-// Profile screen component
-const ProfileScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Profile Screen</Text>
-    </View>
-);
-
-// Settings screen component
-const SettingsScreen = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings Screen</Text>
-    </View>
-);
+import { HomeScreen, PopularScreen, FavouriteScreen, NewsScreen, ProfileScreen, SettingsScreen } from '../screens/index';
+import { BottomNavigation, BottomNavigationTab, Icon } from 'react-native-paper';
 
 // Create bottom tab navigator
 const Tab = createBottomTabNavigator();
@@ -52,18 +10,37 @@ const Tab = createBottomTabNavigator();
 // Create drawer navigator
 const Drawer = createDrawerNavigator();
 
-// la bottom tab navigator component doit avoir les componnent suivant: Home, Popular, Favourite, Nouveauté
 // BottomTabNavigator component
 const BottomTabNavigator = () => (
-    <Tab.Navigator>
+    <Tab.Navigator
+        tabBar={(props) => (
+            <BottomNavigation {...props}>
+                <BottomNavigationTab
+                    title="Home"
+                    icon={({ color, size }) => <Icon name="home" color={color} size={size} />}
+                />
+                <BottomNavigationTab
+                    title="Popular"
+                    icon={({ color, size }) => <Icon name="fire" color={color} size={size} />}
+                />
+                <BottomNavigationTab
+                    title="Favourite"
+                    icon={({ color, size }) => <Icon name="heart" color={color} size={size} />}
+                />
+                <BottomNavigationTab
+                    title="Nouveauté"
+                    icon={({ color, size }) => <Icon name="newspaper" color={color} size={size} />}
+                />
+            </BottomNavigation>
+        )}
+    >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Popular" component={PopularScreen} />
         <Tab.Screen name="Favourite" component={FavouriteScreen} />
-        <Tab.Screen name="Nouveauté" component={NouveautéScreen} />
+        <Tab.Screen name="Nouveauté" component={NewsScreen} />
     </Tab.Navigator>
 );
 
-// DrawerNavigator component doit aussi contenir la bottom tab navigator component
 // DrawerNavigator component
 const DrawerNavigator = () => (
     <Drawer.Navigator>
@@ -73,13 +50,7 @@ const DrawerNavigator = () => (
     </Drawer.Navigator>
 );
 
-
-// Settings screen component
-
-
 // AppNavigator component
-const AppNavigator = () => (
-    <DrawerNavigator />
-);
+const AppNavigator = () => <DrawerNavigator />;
 
 export default AppNavigator;
