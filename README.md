@@ -1,5 +1,9 @@
 # MovieList_Loocist
 
+### Expo link:
+
+`exp://u.expo.dev/update/2b49b7a9-283a-40f7-be2b-dcc35a1ba909`
+
 ### MovieList_Loocist is a React Native application designed to provide users with an intuitive and engaging way to browse and manage a list of movies. This project leverages the power of React Native to offer a cross-platform mobile experience for both iOS and Android users.
 ## Features
 
@@ -33,4 +37,4 @@
 
 ## Contributing
 
-###Contributions to MovieList_Loocist are always welcome! Whether it's bug reports, feature requests, or contributions to the code, all forms of contributions help make MovieList_Loocist better for everyone.
+### Contributions to MovieList_Loocist are always welcome! Whether it's bug reports, feature requests, or contributions to the code, all forms of contributions help make MovieList_Loocist better for everyone.
