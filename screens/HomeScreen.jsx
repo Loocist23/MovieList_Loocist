@@ -1,15 +1,29 @@
-import React from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
 import { TextInput as PaperTextInput, Button as PaperButton, Paragraph } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
 import { useSettings } from '../contexts/SettingsContext';
 import { useProfileData } from '../hooks/useProfileData';
 import SearchResultsModal from '../components/SearchResultModal';
+import { useNewsMovies } from '../hooks/useNewsMovies';
 
 const ProfileScreen = () => {
   const { sessionId } = useAuth();
   const { themeObject } = useSettings();
   const { profileData, searchQuery, setSearchQuery, isSearchModalVisible, setIsSearchModalVisible, searchResults, handleSearch } = useProfileData(sessionId);
+
+  // Dans votre composant
+  const { movies, category, selectedMovieId, setCategory, openMovieDetailsModal, closeMovieDetailsModal, loadMoreMovies } = useNewsMovies();
+
+  const [showImage, setShowImage] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowImage(true);
+    }, 60000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -39,10 +53,14 @@ const ProfileScreen = () => {
         onClose={() => setIsSearchModalVisible(false)}
         searchResults={searchResults}
         themeObject={themeObject}
-        onPressItem={(movie) => {
-          setIsSearchModalVisible(false);
-        }}
+        onPressItem={openMovieDetailsModal} // Ici, vous passez la fonction pour ouvrir les détails du film
       />
+      {showImage && (
+        <Image
+          source={require('../assets/braque.jpg')}
+          style={styles.image}
+        />
+      )}
     </View>
   );
 };
@@ -113,6 +131,12 @@ const styles = StyleSheet.create({
   },
   movieOverview: {
     fontSize: 14,
+  },
+  image: {
+    width: 300,
+    height: 300,
+    alignSelf: 'center',
+    marginTop: 20,
   },
 });
 

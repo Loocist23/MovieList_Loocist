@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native'; // Added Image import
 import { TextInput, Button } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import config from '../config';
+import { useSettings } from '../contexts/SettingsContext';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
+  const { themeObject } = useSettings();
 
   const createRequestToken = async () => {
     try {
@@ -81,7 +83,8 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: themeObject.colors.background}]}>
+      <Image source={require('../assets/logo.png')} style={styles.logo} />
       <TextInput
         label="Username"
         value={username}
@@ -113,6 +116,10 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
+  },
+  logo: {
+    alignSelf: 'center', // Added to center the logo horizontally
+    marginTop: 16, // Added margin to create space between the logo and other elements
   },
 });
 

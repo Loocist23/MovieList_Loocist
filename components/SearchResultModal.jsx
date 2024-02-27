@@ -5,7 +5,7 @@ import { Button as PaperButton } from 'react-native-paper';
 const SearchResultsModal = ({ isVisible, onClose, searchResults, themeObject, onPressItem }) => {
   const SearchResultItem = ({ movie }) => {
     return (
-      <TouchableOpacity onPress={() => onPressItem(movie)} style={{ flexDirection: 'row', padding: 10, alignItems: 'center' }}>
+        <TouchableOpacity onPress={() => onPressItem(movie.id)} style={{ flexDirection: 'row', padding: 10, alignItems: 'center' }}>
         <Image
           source={{ uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}` }}
           style={{ width: 50, height: 75, marginRight: 10 }}
