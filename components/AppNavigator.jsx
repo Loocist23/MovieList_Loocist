@@ -7,7 +7,6 @@ import { BottomNavigation } from 'react-native-paper';
 import { Image } from 'react-native';
 import { useSettings } from '../contexts/SettingsContext';
 
-// Définition de BottomNavigation
 const HomeRoute = () => <HomeScreen />;
 const FavouriteRoute = () => <FavouriteScreen />;
 const NewsRoute = () => <NewsScreen />;
@@ -17,14 +16,10 @@ function MainNavigator() {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'home', title: 'Home', icon: 'home', component: HomeScreen },
-        // Modification pour FavouriteScreen
         { key: 'favourite', title: 'Favourite', icon: 'heart', component: FavouriteRoute },
-        // Modification pour NewsScreen si axé sur les actualités
         { key: 'news', title: 'News', icon: 'newspaper', component: NewsRoute },
-        // Modification pour PopularScreen si axé sur le contenu populaire
         { key: 'popular', title: 'Popular', icon: 'fire', component: PopularRoute },
     ]);
-
 
     const renderIcon = ({ route, focused, color }) => (
         <MaterialCommunityIcons
@@ -51,11 +46,10 @@ function MainNavigator() {
     );
 }
 
-// Drawer Navigator
 const Drawer = createDrawerNavigator();
 
 export function AppNavigator() {
-    const { themeObject } = useSettings(); // Utilisez themeObject ici
+    const { themeObject } = useSettings();
 
     return (
         <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
@@ -107,4 +101,3 @@ export function AppNavigator() {
         </Drawer.Navigator>
     );
 }
-

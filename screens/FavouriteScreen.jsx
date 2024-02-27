@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
 import config from '../config';
 import MovieCard from '../components/MovieCard';
-import { useNavigation } from '@react-navigation/native';
 import MovieDetailsModal from '../components/MovieDetailsModal';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -15,6 +14,7 @@ const FavouriteScreen = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      console.log('Fetching favourite movies...');
       try {
         const response = await axios.get(`${config.API_ROOT_URL}account/${accountId}/favorite/movies?api_key=${config.API_KEY}&session_id=${sessionId}`);
         setMovies(response.data.results);
@@ -24,6 +24,12 @@ const FavouriteScreen = () => {
     };
 
     fetchMovies();
+
+    const intervalId = setInterval(fetchMovies, 20000); // Fetch movies every 20 seconds
+
+    return () => {
+      clearInterval(intervalId); // Clean up the interval when the component unmounts
+    };
   }, [accountId, sessionId]);
 
   const handlePressMovieCard = (movieId) => {
@@ -31,17 +37,23 @@ const FavouriteScreen = () => {
     setIsModalVisible(true);
   };
 
+  const handleFavouriteUpdate = (movieId) => {
+    setMovies((prevMovies) => prevMovies.filter(movie => movie.id !== movieId));
+  }
+
   return (
     <ScrollView
       contentContainerStyle={styles.container}
     >
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} onPress={handlePressMovieCard} />
+        <MovieCard key={movie.id} movie={movie} onPress={() => handlePressMovieCard(movie.id)} />
       ))}
       <MovieDetailsModal
         isVisible={isModalVisible}
         movieId={selectedMovieId}
         onClose={() => setIsModalVisible(false)}
+        isFavourite={movies.some(movie => movie.id === selectedMovieId)}
+        onFavouriteUpdate={handleFavouriteUpdate}
       />
     </ScrollView>
   );

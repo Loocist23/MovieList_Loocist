@@ -5,7 +5,6 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import config from '../config';
 
-
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,13 +16,13 @@ const LoginScreen = () => {
       const requestToken = response.data.request_token;
       return requestToken;
     } catch (error) {
-      console.error('Erreur lors de la création du token de requête:', error);
+      console.error(error);
     }
   };
 
   const authenticateRequestTokenWithLogin = (requestToken) => {
     return axios.post(`${config.API_ROOT_URL}authentication/token/validate_with_login?api_key=${config.API_KEY}`, {
-      username: username.replace(/\s/g, ''), // Remove spaces from username
+      username: username.replace(/\s/g, ''),
       password: password,
       request_token: requestToken
     });
@@ -37,9 +36,19 @@ const LoginScreen = () => {
       const sessionId = response.data.session_id;
       return sessionId;
     } catch (error) {
-      console.error('Erreur lors de la création de l\'ID de session:', error);
+      console.error(error);
     }
   };
+
+  const getAccountId = async (sessionId) => {
+    try {
+      const response = await axios.get(`${config.API_ROOT_URL}account?api_key=${config.API_KEY}&session_id=${sessionId}`);
+      const accountId = response.data.id;
+      return accountId;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -48,30 +57,26 @@ const LoginScreen = () => {
     }
   
     try {
-      // Étape 1 : Créer un token de requête
       const requestToken = await createRequestToken();
       if (!requestToken) {
         console.log('Impossible de créer un token de requête');
         return;
       }
   
-      // Étape 2 : Authentifier le token de requête avec les identifiants de l'utilisateur
       await authenticateRequestTokenWithLogin(requestToken);
   
-      // Étape 3 : Créer un ID de session
       const sessionId = await createSessionId(requestToken);
       if (!sessionId) {
         console.log('Impossible de créer un ID de session');
         return;
       }
+
+      const accountId = await getAccountId(sessionId);
   
-      // Vous pouvez maintenant utiliser sessionId pour les requêtes authentifiées
-      // Stockez sessionId pour une utilisation future et mettez à jour l'état de connexion
-      console.log('Connexion réussie avec session ID:', sessionId);
-      await login(sessionId); // Assurez-vous que votre fonction login accepte un paramètre pour l'ID de session
+      await login(sessionId, accountId);
   
     } catch (error) {
-      console.error('Erreur lors du processus de connexion:', error);
+      console.error(error);
     }
   };
 

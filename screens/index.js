@@ -6,7 +6,6 @@ import NewsScreen from './NewsScreen';
 import SettingsScreen from './SettingsScreen';
 import LoginScreen from './LoginScreen';
 import MovieDetailScreen from './MovieDetailScreen';
-// Add more screen imports here
 
 export {
     HomeScreen,
@@ -17,5 +16,4 @@ export {
     SettingsScreen,
     LoginScreen,
     MovieDetailScreen,
-    // Add more screen exports here
 };

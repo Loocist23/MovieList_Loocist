@@ -1,4 +1,3 @@
-// usePopularMovies.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../config';
@@ -12,7 +11,13 @@ export const usePopularMovies = () => {
   useEffect(() => {
     axios.get(`${config.API_ROOT_URL}/movie/popular?api_key=${config.API_KEY}&page=${page}`)
       .then((response) => {
-        setMovies((prevMovies) => [...prevMovies, ...response.data.results]);
+        const newMovies = response.data.results.filter(newMovie => 
+          !movies.some(existingMovie => existingMovie.id === newMovie.id)
+        );
+
+        if (newMovies.length > 0) {
+          setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+        }
       })
       .catch((error) => {
         console.error(error);

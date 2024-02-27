@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { AppNavigator } from './components/AppNavigator';
 import { LoginScreen } from './screens/index';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
 };
 
 const ThemedApp = () => {
-  const { theme, themeObject } = useSettings();
+  const { themeObject } = useSettings();
   const appTheme = themeObject;
 
   return (
@@ -34,7 +34,7 @@ const ThemedApp = () => {
 };
 
 const AppContent = () => {
-  const { sessionId, loading } = useAuth();
+  const { sessionId } = useAuth();
 
   return sessionId ? <AppNavigator /> : <LoginScreen />;
 };

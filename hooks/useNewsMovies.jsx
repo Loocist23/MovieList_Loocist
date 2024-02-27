@@ -1,4 +1,3 @@
-// useNewsMovies.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../config';
@@ -14,7 +13,6 @@ export const useNewsMovies = () => {
       let API_URL = `${config.API_ROOT_URL}/movie/${category}?api_key=${config.API_KEY}&page=${page}`;
       try {
         const response = await axios.get(API_URL);
-        // Réinitialisez les films seulement si page est à 1, pour gérer à la fois le changement de catégorie et le chargement plus
         if (page === 1) {
           setMovies(response.data.results);
         } else {
@@ -29,7 +27,6 @@ export const useNewsMovies = () => {
   }, [category, page]);
 
   useEffect(() => {
-    // Réinitialisez la page à 1 chaque fois que la catégorie change
     setPage(1);
   }, [category]);
 

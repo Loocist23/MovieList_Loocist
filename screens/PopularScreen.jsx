@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Button } from 'react-native';
-import { usePopularMovies } from '../hooks/usePopularMovies'; // Assurez-vous d'importer le hook correctement
+import { usePopularMovies } from '../hooks/usePopularMovies';
 import MovieCard from '../components/MovieCard';
 import MovieDetailsModal from '../components/MovieDetailsModal';
 
@@ -16,8 +16,9 @@ const PopularScreen = () => {
         isVisible={isModalVisible}
         movieId={selectedMovieId}
         onClose={() => setIsModalVisible(false)}
+        isFavourite={movies.some(movie => movie.id === selectedMovieId)}
       />
-      <Button title="Charger plus" onPress={handleLoadMore} />
+      <Button style={{}} title="Load more" onPress={handleLoadMore} />
     </ScrollView>
   );
 };

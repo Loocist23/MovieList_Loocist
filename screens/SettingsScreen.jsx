@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useSettings } from '../contexts/SettingsContext';
 
 const SettingsScreen = () => {

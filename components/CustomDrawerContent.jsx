@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Drawer } from 'react-native-paper';
-import CustomHeader from './CustomHeader'; // Assurez-vous que le chemin est correct
-import { useAuth } from '../contexts/AuthContext'; // Assurez-vous que le chemin est correct
+import CustomHeader from './CustomHeader';
+import { useAuth } from '../contexts/AuthContext';
 import { useSettings } from '../contexts/SettingsContext';
 
 function CustomDrawerContent(props) {

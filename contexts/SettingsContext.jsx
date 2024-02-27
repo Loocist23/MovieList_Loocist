@@ -6,7 +6,6 @@ const SettingsContext = createContext();
 
 export const useSettings = () => useContext(SettingsContext);
 
-// Définition de DarkTheme personnalisé
 const CustomDarkTheme = {
   ...DarkTheme,
   colors: {
@@ -49,11 +48,11 @@ const CustomDarkTheme = {
     },
     surfaceDisabled: "rgba(231, 225, 229, 0.12)",
     onSurfaceDisabled: "rgba(231, 225, 229, 0.38)",
-    backdrop: "rgba(51, 47, 55, 0.4)"
+    backdrop: "rgba(51, 47, 55, 0.4)",
+    text: "rgb(231, 225, 229)",
   },
 };
 
-// Définition de LightTheme personnalisé
 const CustomLightTheme = {
   ...DefaultTheme,
   colors: {
@@ -97,16 +96,16 @@ const CustomLightTheme = {
     },
     surfaceDisabled: "rgba(29, 27, 30, 0.12)",
     onSurfaceDisabled: "rgba(29, 27, 30, 0.38)",
-    backdrop: "rgba(51, 47, 55, 0.4)"
+    backdrop: "rgba(51, 47, 55, 0.4)",
+    text: "rgb(29, 27, 30)",
   },
 };
 
 const THEME_KEY = 'user-theme';
 
 export const SettingsProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // 'light' ou 'dark'
+  const [theme, setTheme] = useState('light');
 
-  // Charger le thème sauvegardé au démarrage de l'application
   useEffect(() => {
     const loadTheme = async () => {
       try {
@@ -126,7 +125,6 @@ export const SettingsProvider = ({ children }) => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
 
-    // Sauvegarder le nouveau thème
     try {
       await AsyncStorage.setItem(THEME_KEY, newTheme);
       console.log('Theme saved:', newTheme);
