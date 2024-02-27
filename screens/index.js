@@ -4,7 +4,8 @@ import ProfileScreen from './ProfileScreen';
 import PopularScreen from './PopularScreen';
 import NewsScreen from './NewsScreen';
 import SettingsScreen from './SettingsScreen';
-// Add more screen imports here
+import LoginScreen from './LoginScreen';
+import MovieDetailScreen from './MovieDetailScreen';
 
 export {
     HomeScreen,
@@ -13,5 +14,6 @@ export {
     PopularScreen,
     NewsScreen,
     SettingsScreen,
-    // Add more screen exports here
+    LoginScreen,
+    MovieDetailScreen,
 };
