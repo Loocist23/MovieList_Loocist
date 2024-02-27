@@ -120,6 +120,9 @@ const styles = StyleSheet.create({
   logo: {
     alignSelf: 'center', // Added to center the logo horizontally
     marginTop: 16, // Added margin to create space between the logo and other elements
+    marginBottom: 32, // Added margin to create space between the logo and other elements
+    width: 200, // Added width to the logo
+    height: 200, // Added height to the logo
   },
 });
 
