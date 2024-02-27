@@ -1,57 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import config from '../config'; // Replace with the actual path to your config file
-import { View, Text, Image, TextInput, Button, Modal, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-import { Paragraph, TextInput as PaperTextInput, Button as PaperButton } from 'react-native-paper';
+import React from 'react';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import { TextInput as PaperTextInput, Button as PaperButton, Paragraph } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
-import { StyleSheet } from 'react-native';
 import { useSettings } from '../contexts/SettingsContext';
+import { useProfileData } from '../hooks/useProfileData';
+import SearchResultsModal from '../components/SearchResultModal';
 
 const ProfileScreen = () => {
-  const [profileData, setProfileData] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const { sessionId } = useAuth();
-  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const { themeObject } = useSettings();
-
-  const SearchResultItem = ({ movie, onPress }) => {
-    return (
-      <TouchableOpacity onPress={onPress} style={styles.searchResultItem}>
-        <Image
-          source={{ uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}` }}
-          style={styles.movieImage}
-        />
-        <View style={[styles.movieInfo, { color: themeObject.colors.text }]}>
-          <Text style={[styles.movieTitle, { color: themeObject.colors.text }]}>{movie.title}</Text>
-          <Text style={[styles.movieOverview, { color: themeObject.colors.text }]}>{movie.overview}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await axios.get(`${config.API_ROOT_URL}account?api_key=${config.API_KEY}&session_id=${sessionId}`);
-        setProfileData(response.data);
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`${config.API_ROOT_URL}search/movie?api_key=${config.API_KEY}&query=${searchQuery}`);
-      setSearchResults(response.data.results); // Mise à jour de l'état avec les résultats
-      setIsSearchModalVisible(true); // Ouverture de la modal
-    } catch (error) {
-      console.error('Error searching movies:', error);
-    }
-  };
+  const { profileData, searchQuery, setSearchQuery, isSearchModalVisible, setIsSearchModalVisible, searchResults, handleSearch } = useProfileData(sessionId);
 
   return (
     <View style={styles.container}>
@@ -71,51 +29,20 @@ const ProfileScreen = () => {
           </PaperButton>
         </View>
         {profileData ? (
-          <View>
-            <Paragraph style={styles.title}>Welcome back: {profileData.username}</Paragraph>
-          </View>
+          <Paragraph style={styles.title}>Welcome back: {profileData.username}</Paragraph>
         ) : (
           <Text style={styles.title}>Loading profile data...</Text>
         )}
-
-
-
-        <Modal
-          visible={isSearchModalVisible}
-          onRequestClose={() => setIsSearchModalVisible(false)}
-        >
-          <View style={[styles.modalContainer, { backgroundColor: themeObject.colors.background }]}>
-            <View style={styles.searchBarContainer}>
-              <View style={styles.searchInputContainer}>
-                <PaperTextInput
-                  style={[styles.searchInput, { color: themeObject.colors.text }]}
-                  placeholder="Search movies"
-                  placeholderTextColor={themeObject.colors.text}
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                />
-              </View>
-              <PaperButton mode="contained" onPress={() => setIsSearchModalVisible(false)} style={styles.searchButton}>
-                Close
-              </PaperButton>
-            </View>
-            <FlatList
-              data={searchResults}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <SearchResultItem
-                  movie={item}
-                  onPress={() => {
-                    setSelectedMovieId(item.id);
-                    setIsSearchModalVisible(false);
-                    setIsModalVisible(true); // Ouvre la modal MovieDetailsModal avec les détails du film sélectionné
-                  }}
-                />
-              )}
-            />
-          </View>
-        </Modal>
       </ScrollView>
+      <SearchResultsModal
+        isVisible={isSearchModalVisible}
+        onClose={() => setIsSearchModalVisible(false)}
+        searchResults={searchResults}
+        themeObject={themeObject}
+        onPressItem={(movie) => {
+          setIsSearchModalVisible(false);
+        }}
+      />
     </View>
   );
 };
