@@ -7,7 +7,7 @@ import { useProfileData } from '../hooks/useProfileData';
 import SearchResultsModal from '../components/SearchResultModal';
 import { useNewsMovies } from '../hooks/useNewsMovies';
 
-const ProfileScreen = () => {
+const HomeScreen = () => {
   const { sessionId } = useAuth();
   const { themeObject } = useSettings();
   const { profileData, searchQuery, setSearchQuery, isSearchModalVisible, setIsSearchModalVisible, searchResults, handleSearch } = useProfileData(sessionId);
@@ -105,9 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  searchResultItem: {
-    marginBottom: 10,
-  },
   movieTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -125,10 +122,6 @@ const styles = StyleSheet.create({
   movieInfo: {
     flex: 1,
   },
-  movieTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   movieOverview: {
     fontSize: 14,
   },
@@ -140,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default HomeScreen;

@@ -10,7 +10,7 @@ export const useNewsMovies = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      let API_URL = `${config.API_ROOT_URL}/movie/${category}?api_key=${config.API_KEY}&page=${page}`;
+      let API_URL = `${config.API_ROOT_URL}movie/${category}?api_key=${config.API_KEY}&page=${page}`;
       try {
         const response = await axios.get(API_URL);
         if (page === 1) {

@@ -6,7 +6,7 @@ const MovieDetailScreen = ({ route }) => {
   const [movieDetails, setMovieDetails] = useState(null);
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=faf30dd1010ebaacde85beaadb7c4d49`)
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=cf85e341ba9c406556433fa9a0236e11`)
       .then(response => response.json())
       .then(data => setMovieDetails(data))
       .catch(error => console.error(error));

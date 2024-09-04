@@ -14,7 +14,7 @@ const MovieDetailsModal = ({ isVisible, movieId, onClose, isFavourite, onFavouri
 
   useEffect(() => {
     if (movieId) {
-      axios.get(`${config.API_ROOT_URL}/movie/${movieId}?api_key=${config.API_KEY}`)
+      axios.get(`${config.API_ROOT_URL}movie/${movieId}?api_key=${config.API_KEY}`)
         .then((response) => {
           setMovieDetails(response.data);
         })
@@ -39,7 +39,7 @@ const MovieDetailsModal = ({ isVisible, movieId, onClose, isFavourite, onFavouri
     };
 
     try {
-      const response = await fetch(`${config.API_ROOT_URL}/account/${accountId}/favorite?api_key=${config.API_KEY}&session_id=${sessionId}`, options);
+      const response = await fetch(`${config.API_ROOT_URL}account/${accountId}/favorite?api_key=${config.API_KEY}&session_id=${sessionId}`, options);
       const jsonResponse = await response.json();
 
       if (jsonResponse.success) {

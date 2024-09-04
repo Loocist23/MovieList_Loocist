@@ -9,7 +9,7 @@ export const usePopularMovies = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get(`${config.API_ROOT_URL}/movie/popular?api_key=${config.API_KEY}&page=${page}`)
+    axios.get(`${config.API_ROOT_URL}movie/popular?api_key=${config.API_KEY}&page=${page}`)
       .then((response) => {
         const newMovies = response.data.results.filter(newMovie => 
           !movies.some(existingMovie => existingMovie.id === newMovie.id)
